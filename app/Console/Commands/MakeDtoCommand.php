@@ -22,7 +22,7 @@ class MakeDtoCommand extends Command
             $name .= 'DTO';
         }
 
-        $directory = app_path('DTO');
+        $directory = app_path('DTOs');
 
         if (! is_dir($directory)) {
             mkdir($directory, 0755, true);

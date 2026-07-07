@@ -21,12 +21,12 @@ return [
         'login',
         'logout',
         'user',
-        'cities*'
+        'cities*',
+        'locations*'
     ],
-
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173'],
+    'allowed_origins' => ['http://localhost:5174'],
 
     'allowed_origins_patterns' => [],
 
