@@ -13,7 +13,7 @@ class LocationService
      */
     public function getAll(): Collection
     {
-        return Location::all();
+        return Location::with('city')->get();
     }
 
     /**

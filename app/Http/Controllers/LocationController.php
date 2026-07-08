@@ -15,6 +15,14 @@ class LocationController extends Controller
     /**
      * Store a newly created location.
      */
+    public function index()
+    {
+        $location =  $this->locationService->getAll();
+        return response()->json([
+            'message' => 'Location fetch successfully.',
+            'data'    => $location,
+        ], 201);
+    }
     public function store(LocationRequest $request)
     {
         $dto = LocationDTO::fromRequest($request->validated());
