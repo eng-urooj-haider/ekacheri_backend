@@ -6,16 +6,20 @@ use App\DTOs\CityDTO;
 use App\Http\Requests\CityRequest;
 use App\Models\City;
 use App\Services\CityService;
-use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
+    public function __construct(
+        private readonly CityService $cityService
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
-    public function index(CityService $cityService)
+    public function index()
     {
-        $cities =  $cityService->getAll();
+        $cities = $this->cityService->getAll();
+
         return response()->json([
             'message' => 'Cities fetched successfully.',
             'data'    => $cities,
@@ -23,22 +27,17 @@ class CityController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create() {}
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(CityRequest $request, CityService $cityService)
+    public function store(CityRequest $request)
     {
-        $request->validated();
         $dto = CityDTO::fromRequest($request->validated());
-        $city = $cityService->save($dto);
+
+        $city = $this->cityService->saveCity($dto);
 
         return response()->json([
             'message' => 'City created successfully.',
-            'data'    => $city,
+            'data' => $city,
         ], 201);
     }
 
@@ -47,27 +46,33 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
-        //
+        return response()->json([
+            'message' => 'City retrieved successfully.',
+            'data'    => $city,
+        ]);
     }
+    public function edit(int $id)
+    {
+        $location = $this->cityService->getCity($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-  public function edit($id, CityService $cityService)
-{
-    $city = $cityService->getCity($id);
-
-    return response()->json([
-        'data' => $city,
-    ]);
-}
-
+        return response()->json([
+            'message' => 'City retrieved successfully.',
+            'data'    => $location,
+        ]);
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, City $city)
+    public function update(CityRequest $request, City $city)
     {
-        //
+        $dto = CityDTO::fromRequest($request->validated());
+
+        $updated = $this->cityService->updateCity($city, $dto);
+
+        return response()->json([
+            'message' => 'City updated successfully.',
+            'data' => $updated,
+        ]);
     }
 
     /**
@@ -75,6 +80,10 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        //
+        $this->cityService->deleteCity($city);
+
+        return response()->json([
+            'message' => 'City deleted successfully.',
+        ]);
     }
 }

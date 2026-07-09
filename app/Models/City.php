@@ -10,4 +10,9 @@ class City extends Model
         'title',
         'status',
     ];
+    protected $appends = ['created_at_formatted'];
+    public function getCreatedAtFormattedAttribute()
+    {
+        return $this->created_at?->format('m/y/d');
+    }
 }

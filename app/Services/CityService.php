@@ -7,16 +7,30 @@ use App\Models\City;
 
 class CityService
 {
-    function getAll()
+    public function getAll()
     {
         return City::all();
     }
-    public function save(CityDTO $dto): City
+
+    public function saveCity(CityDTO $dto): City
     {
         return City::create($dto->toArray());
     }
-    public function getCity($id)
+
+    public function getCity(int $id): City
     {
-        return City::where('id', $id)->first();
+        return City::findOrFail($id);
+    }
+
+    public function updateCity(City $city, CityDTO $dto): City
+    {
+        $city->update($dto->toArray());
+
+        return $city->fresh();
+    }
+
+    public function deleteCity(City $city): void
+    {
+        $city->delete();
     }
 }

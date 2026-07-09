@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CityRequest extends FormRequest
 {
@@ -23,7 +24,12 @@ class CityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'  => 'required|string|max:255|unique:cities,title,',
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('cities', 'title')->ignore($this->city),
+            ],
             'status' => 'required|boolean',
         ];
     }

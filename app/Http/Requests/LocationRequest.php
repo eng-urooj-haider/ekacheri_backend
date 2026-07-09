@@ -29,7 +29,7 @@ class LocationRequest extends FormRequest
                 'string',
                 'max:255',
                 Rule::unique('locations', 'location')
-                    ->where(fn($query) => $query->where('city_id', $this->city_id)),
+                    ->where(fn($query) => $query->where('city_id', $this->city_id))->ignore($this->route('location')),
             ],
             'city_id'  => ['required', 'integer', Rule::exists('cities', 'id')],
             'status'   => ['nullable', 'boolean'],
