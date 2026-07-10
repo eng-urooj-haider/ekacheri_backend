@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class UserRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
+            'gender' => ['required', Rule::in(['male', 'female', 'other'])],
+            'password' => ['nullable', 'string', 'min:8'],
+            'telco_id' => ['required', 'exists:telcos,id'],
+            'mobile' => ['required', 'string', 'regex:/^03\d{9}$/'],
+            'executive_number' => ['required', 'string', 'max:255'],
+            'designation' => ['required', 'string', 'max:255'],
+            'department_id' => ['required', 'exists:departments,id'],
+        ];
+    }
+}

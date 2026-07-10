@@ -16,3 +16,4 @@ class City extends Model
         return $this->created_at?->format('m/y/d');
     }
 }
+
