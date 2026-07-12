@@ -15,9 +15,6 @@ class User extends Authenticatable
 
     protected $primaryKey = 'userId';
 
-    const CREATED_AT = 'created';
-    const UPDATED_AT = 'updated';
-
     protected $fillable = [
         'name',
         'email',
@@ -28,7 +25,10 @@ class User extends Authenticatable
         'mobile',
         'executive_number',
         'designation',
-        'department'
+        'department',
+        'roleId',
+        'createdBy',
+        'status'
     ];
 
     protected $hidden = [

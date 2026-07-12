@@ -22,7 +22,8 @@ return [
         'logout',
         'user',
         'cities*',
-        'locations*'
+        'locations*',
+        'dfps*'
     ],
     'allowed_methods' => ['*'],
 

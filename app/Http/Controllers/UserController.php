@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\UserDTO;
+use App\Http\Requests\UserRequest;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,8 @@ class UserController extends Controller
 {
     public function __construct(
         private readonly UserService $userService
-    ) {}
+    ) {
+    }
     public function index()
     {
         //
@@ -27,15 +29,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $dto = UserDTO::fromRequest($request->validated());
-
-        $location = $this->userService->save($dto);
+        $dto = UserDTO::fromRequest($request);
+        $user = $this->userService->save($dto);
 
         return response()->json([
-            'message' => 'Location created successfully.',
-            'data'    => $location,
+            'message' => 'User created successfully.',
+            'data' => $user,
         ], 201);
     }
 

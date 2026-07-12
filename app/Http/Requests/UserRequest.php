@@ -22,11 +22,13 @@ class UserRequest extends FormRequest
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
             'gender' => ['required', Rule::in(['male', 'female', 'other'])],
             'password' => ['nullable', 'string', 'min:8'],
-            'telco_id' => ['required', 'exists:telcos,id'],
+            'telco' => ['required'],
             'mobile' => ['required', 'string', 'regex:/^03\d{9}$/'],
             'executive_number' => ['required', 'string', 'max:255'],
             'designation' => ['required', 'string', 'max:255'],
-            'department_id' => ['required', 'exists:departments,id'],
+            // 'department' => ['required', 'exists:departments,id'],
+            'department' => ['required'],
+
         ];
     }
 }

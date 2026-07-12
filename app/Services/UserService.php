@@ -20,7 +20,9 @@ class UserService
     public function save(UserDTO $dto): User
     {
         $data = $dto->toArray();
-
+        $data['roleId'] = 4;
+        $data['createdBy'] = 1;
+        $data['status'] = 'Active';
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         } else {

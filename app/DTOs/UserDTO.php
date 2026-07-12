@@ -2,7 +2,6 @@
 
 namespace App\DTOs;
 
-use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UserRequest;
 
 class UserDTO
@@ -16,7 +15,7 @@ class UserDTO
         public readonly string $mobile,
         public readonly string $executive_number,
         public readonly string $designation,
-        public readonly string $departmen_id,
+        public readonly string $department,
     ) {}
 
     /**
@@ -35,7 +34,7 @@ class UserDTO
             mobile: $validated['mobile'],
             executive_number: $validated['executive_number'],
             designation: $validated['designation'],
-            departmen_id: $validated['departmen_id'],
+            department: (int) $validated['department'],
         );
     }
 
@@ -53,7 +52,7 @@ class UserDTO
             'mobile' => $this->mobile,
             'executive_number' => $this->executive_number,
             'designation' => $this->designation,
-            'department' => $this->departmen_id,
+            'department' => $this->department,
         ];
     }
 }
