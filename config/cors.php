@@ -23,7 +23,8 @@ return [
         'user',
         'cities*',
         'locations*',
-        'dfps*'
+        'dfps*',
+        'departments*'
     ],
     'allowed_methods' => ['*'],
 

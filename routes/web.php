@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -18,4 +19,6 @@ Route::middleware('auth')->get('/user', function (Request $request) {
 Route::resource('cities',CityController::class);
 Route::resource('locations',LocationController::class);
 Route::resource('dfps',UserController::class);
+Route::resource('departments',DepartmentController::class);
+
 
