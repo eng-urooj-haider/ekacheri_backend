@@ -7,6 +7,7 @@ namespace App\Services;
 use App\DTOs\UserDTO;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserService
 {
@@ -16,7 +17,10 @@ class UserService
     // {
     //     return response()->json($this->userService->getAll());
     // }
-
+    public function getAll(): Collection
+    {
+        return User::all();
+    }
     public function save(UserDTO $dto): User
     {
         $data = $dto->toArray();
@@ -31,5 +35,9 @@ class UserService
         }
 
         return User::create($data);
+    }
+     public function getDfp(int $id):User
+    {
+        return User::findOrFail($id);
     }
 }
