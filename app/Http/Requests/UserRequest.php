@@ -19,8 +19,8 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
-            'gender' => ['required', Rule::in(['male', 'female', 'other'])],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->route('dfp'))],
+            'gender' => ['required'],
             'password' => ['nullable', 'string', 'min:8'],
             'telco' => ['required'],
             'mobile' => ['required', 'string', 'regex:/^03\d{9}$/'],

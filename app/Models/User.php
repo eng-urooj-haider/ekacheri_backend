@@ -13,7 +13,7 @@ class User extends Authenticatable
 
     // protected $table = 'tbl_users';
 
-    protected $primaryKey = 'userId';
+    // protected $primaryKey = 'userId';
 
     protected $fillable = [
         'name',

@@ -15,7 +15,11 @@ class UserController extends Controller
     }
     public function index()
     {
-        //
+        $dfps =  $this->userService->getAll();
+        return response()->json([
+            'message' => 'Location fetch successfully.',
+            'data'    => $dfps,
+        ], 201);
     }
 
     /**
@@ -51,17 +55,29 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        //
+         $location = $this->userService->getById($id);
+
+        return response()->json([
+            'message' => 'DFP retrieved successfully.',
+            'data'    => $location,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, int $id)
     {
-        //
+        $dto = UserDTO::fromRequest($request);
+
+        $location = $this->userService->update($id, $dto);
+
+        return response()->json([
+            'message' => 'Location updated successfully.',
+            'data'    => $location,
+        ]);
     }
 
     /**
