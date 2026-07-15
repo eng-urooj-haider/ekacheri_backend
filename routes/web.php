@@ -4,7 +4,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EkachehriController;
-use App\Http\Controllers\KacheriController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +21,5 @@ Route::resource('cities',CityController::class);
 Route::resource('locations',LocationController::class);
 Route::resource('dfps',UserController::class);
 Route::resource('departments',DepartmentController::class);
-Route::get('latest_kacheries',[EkachehriController::class , 'getLatestId']);
-
-
+Route::get('latest_kacheries',[EkachehriController::class ,'latestId' ]);
+Route::resource('kachehries',EkachehriController::class);

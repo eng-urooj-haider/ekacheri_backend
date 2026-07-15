@@ -25,7 +25,8 @@ return [
         'locations*',
         'dfps*',
         'departments*',
-        'latest_kacheries'
+        'latest_kacheries',
+        'kachehries*'
     ],
     'allowed_methods' => ['*'],
 
