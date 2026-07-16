@@ -25,7 +25,7 @@ class EkachehriService
      */
     public function getLatestId(): int
     {
-        return (int) (Ekachehri::max('kachehri_number') ?? 0);
+        return (int) (Ekachehri::max('id') ?? 0);
     }
 
     public function create(EkachehriDTO $dto): Ekachehri
@@ -48,9 +48,8 @@ class EkachehriService
             $ekachehri->update($dto->toModelArray());
 
             $ekachehri->attendees()->sync($dto->attendeeIds);
-            $ekachehri->dfps()->sync($dto->dfpIds);
 
-            return $ekachehri->load(['attendees', 'dfps']);
+            return $ekachehri->load(['attendees']);
         });
     }
 

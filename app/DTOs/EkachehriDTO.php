@@ -14,6 +14,9 @@ class EkachehriDTO
         public readonly string $status,
         public readonly array $attendeeIds,
         public readonly array $dfp_ids,
+        public readonly ?string $complaint_received = null, // FIX: restored, edit-only
+        public readonly ?string $session_convened = null,   // FIX: restored, edit-only
+        public readonly ?string $session_not_conv_reason = null, // FIX: restored, edit-only
     ) {}
 
     /**
@@ -32,6 +35,10 @@ class EkachehriDTO
             status: $data['status'],
             attendeeIds: $data['attendeeIds'],
             dfp_ids: $data['dfpIds'],
+            complaint_received: $data['complaint_received'] ?? null,
+            session_convened: $data['session_convened'] ?? null,
+            session_not_conv_reason: $data['session_not_conv_reason'] ?? null,
+
         );
     }
 
@@ -41,7 +48,7 @@ class EkachehriDTO
      */
     public function toModelArray(): array
     {
-        return [
+        return array_filter([
             'kachehri_number' => $this->kachehriNumber,
             'venue' => $this->venue,
             'session' => $this->session,
@@ -49,7 +56,10 @@ class EkachehriDTO
             'kachehri_time' => $this->kachehriTime,
             'location' => $this->location,
             'status' => $this->status,
-            'dfp_ids' => implode(',', $this->dfp_ids)
-        ];
+            'dfp_ids' => implode(',', $this->dfp_ids),
+            'complaint_received' => $this->complaint_received,
+            'session_convened' => $this->session_convened,
+            'session_not_conv_reason' => $this->session_not_conv_reason,
+        ], fn($value) => $value !== null && $value !== '');
     }
 }

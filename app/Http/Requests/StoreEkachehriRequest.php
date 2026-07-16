@@ -18,7 +18,7 @@ class StoreEkachehriRequest extends FormRequest
             'venue' => ['required', 'string', 'max:255'],
             'session' => ['required'],
             'kachehriDate' => ['required', 'date'],
-            'kachehriTime' => ['required', 'date_format:H:i'],
+            'kachehriTime' => ['required'],
             'location' => ['required', 'string', 'max:255'],
             'status' => ['required', 'in:Active,Inactive'],
             'attendeeIds' => ['required', 'array', 'min:1'],

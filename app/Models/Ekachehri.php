@@ -18,13 +18,16 @@ class Ekachehri extends Model
         'kachehri_time',
         'location',
         'status',
-        'dfp_ids'
+        'dfp_ids',
+        'complaint_received',
+        'session_convened',
+        'session_not_conv_reason'
     ];
 
     protected $casts = [
         'kachehri_date' => 'date:Y-m-d',
         'kachehri_number' => 'integer',
-        'dfp_ids'=>'array'
+        'dfp_ids' => 'array'
     ];
 
     public function attendees(): BelongsToMany

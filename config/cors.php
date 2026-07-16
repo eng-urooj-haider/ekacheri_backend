@@ -26,7 +26,8 @@ return [
         'dfps*',
         'departments*',
         'latest_kacheries',
-        'kachehries*'
+        'kachehries*',
+        'complaints*',
     ],
     'allowed_methods' => ['*'],
 
