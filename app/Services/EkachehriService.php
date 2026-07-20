@@ -6,6 +6,7 @@ use App\DTOs\EkachehriDTO;
 use App\Models\Ekachehri;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class EkachehriService
 {
@@ -31,7 +32,10 @@ class EkachehriService
     public function create(EkachehriDTO $dto): Ekachehri
     {
         return DB::transaction(function () use ($dto) {
-            $ekachehri = Ekachehri::create($dto->toModelArray());
+            $data = $dto->toModelArray();
+            $data['createdby'] = auth()->id();
+            $data['uuid'] = Str::uuid();
+            $ekachehri = Ekachehri::create($data);
 
             $ekachehri->attendees()->sync($dto->attendeeIds);
             // $ekachehri->dfps()->sync($dto->dfpIds);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DTOs\ComplaintDTO;
 use App\Http\Requests\StoreComplaintRequest;
 use App\Models\Complaint;
+use App\Models\Ekachehri;
 use App\Services\ComplaintService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -62,17 +63,30 @@ class ComplaintController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Complaint $complaint)
+    public function edit($id)
     {
-        //
+        $complaint = $this->service->getComplaint($id);
+
+        return response()->json([
+            'message' => 'Complaint retrieved successfully.',
+            'data'    => $complaint,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Complaint $complaint)
+   public function update(StoreComplaintRequest $request, int $id): JsonResponse
     {
-        //
+        $dto = ComplaintDTO::fromArray($request->validated());
+
+        $ekachehri = $this->service->update($id, $dto);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'E-Kachehri updated successfully.',
+            'data' => $ekachehri,
+        ]);
     }
 
     /**
@@ -85,18 +99,18 @@ class ComplaintController extends Controller
 
     public function findUuid(string $uuid): JsonResponse
     {
-        $complaint = Complaint::find($uuid);
+        $complaint = Ekachehri::where('uuid',$uuid)->first();
 
         if (!$complaint) {
             return response()->json([
                 'success' => false,
-                'message' => 'Complaint not found.',
+                'message' => 'Ekacheri not found.',
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Complaint retrieved successfully.',
+            'message' => 'Ekacheri retrieved successfully.',
             'data'    => $complaint,
         ]);
     }

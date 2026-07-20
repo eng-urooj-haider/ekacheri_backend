@@ -28,6 +28,9 @@ return [
         'latest_kacheries',
         'kachehries*',
         'complaints*',
+        '/dashboard/kachehri-stats',
+        '/dashboard/kachehri-monthly',
+        '/dashboard/complaint-monthly'
     ],
     'allowed_methods' => ['*'],
 

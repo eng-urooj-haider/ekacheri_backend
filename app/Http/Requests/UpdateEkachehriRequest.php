@@ -30,7 +30,7 @@ class UpdateEkachehriRequest extends FormRequest
             // FIX: accept both "H:i" and "H:i:s" so legacy data with seconds doesn't fail
             'kachehriTime' => ['required', 'date_format:H:i,H:i:s'],
             'location' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'in:Active,Inactive'],
+            'status' => ['nullable', 'in:Active,Inactive'],
             'attendeeIds' => ['required', 'array', 'min:1'],
             'attendeeIds.*' => ['integer', 'exists:users,id'],
             'dfpIds' => ['required', 'array', 'min:1'],

@@ -9,7 +9,7 @@ class CityService
 {
     public function getAll()
     {
-        return City::all();
+        return City::orderBy('created_at','desc')->get();
     }
 
     public function saveCity(CityDTO $dto): City

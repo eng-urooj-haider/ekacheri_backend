@@ -16,7 +16,10 @@ class UserDTO
         public readonly string $executive_number,
         public readonly string $designation,
         public readonly string $department,
-    ) {}
+        public readonly string $roleId,
+
+    ) {
+    }
 
     /**
      * Build a UserDTO from a validated Form Request.
@@ -35,6 +38,7 @@ class UserDTO
             executive_number: $validated['executive_number'],
             designation: $validated['designation'],
             department: (int) $validated['department'],
+            roleId: (int) $validated['roleId']
         );
     }
 
@@ -53,6 +57,7 @@ class UserDTO
             'executive_number' => $this->executive_number,
             'designation' => $this->designation,
             'department' => $this->department,
+            'roleId' => $this->roleId,
         ];
     }
 }

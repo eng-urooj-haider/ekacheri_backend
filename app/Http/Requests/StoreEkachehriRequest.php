@@ -20,7 +20,7 @@ class StoreEkachehriRequest extends FormRequest
             'kachehriDate' => ['required', 'date'],
             'kachehriTime' => ['required'],
             'location' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'in:Active,Inactive'],
+            'status' => ['nullable', 'in:Active,Inactive'],
             'attendeeIds' => ['required', 'array', 'min:1'],
             'attendeeIds.*' => ['integer', 'exists:users,id'],
             'dfpIds' => ['required', 'array', 'min:1'],

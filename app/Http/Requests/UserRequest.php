@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
             'mobile' => ['required', 'string', 'regex:/^03\d{9}$/'],
             'executive_number' => ['required', 'string', 'max:255'],
             'designation' => ['required', 'string', 'max:255'],
+            'roleId' => ['required'],
             // 'department' => ['required', 'exists:departments,id'],
             'department' => ['required'],
 

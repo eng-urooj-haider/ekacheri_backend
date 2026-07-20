@@ -17,13 +17,12 @@ class UserService
 
     public function getById(int $id): User
     {
-        return User::findOrFail($id);
+        return User::with('dept')->where('id',$id)->first();
     }
 
     public function save(UserDTO $dto): User
     {
         $data = $dto->toArray();
-        $data['roleId'] = 4;
         $data['createdBy'] = 1;
         $data['status'] = 'Active';
 

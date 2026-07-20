@@ -31,7 +31,7 @@ class LocationService
      */
     public function getLocation(int $id): Location
     {
-        return Location::findOrFail($id);
+        return Location::with('city')->where('id',$id)->first();
     }
 
     /**

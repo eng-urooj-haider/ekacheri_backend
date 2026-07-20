@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EkachehriController;
 use App\Http\Controllers\LocationController;
@@ -37,3 +38,7 @@ Route::get('/generate-kacheri-uuids', function () {
     return 'UUIDs generated successfully.';
 });
 Route::get('complaints/fetchuuid/{uuid}', [ComplaintController::class, 'finduuid']);
+// routes/api.php
+Route::get('/dashboard/kachehri-stats', [DashboardController::class, 'dashboardStats']);
+Route::get('/dashboard/kachehri-monthly', [DashboardController::class, 'kachehriMonthly']);
+Route::get('/dashboard/complaint-monthly', [DashboardController::class, 'complaintMonthly']);

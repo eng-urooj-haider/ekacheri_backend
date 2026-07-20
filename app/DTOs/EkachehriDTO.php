@@ -11,7 +11,7 @@ class EkachehriDTO
         public readonly string $kachehriDate,
         public readonly string $kachehriTime,
         public readonly string $location,
-        public readonly string $status,
+        public readonly ?string $status,
         public readonly array $attendeeIds,
         public readonly array $dfp_ids,
         public readonly ?string $complaint_received = null, // FIX: restored, edit-only
