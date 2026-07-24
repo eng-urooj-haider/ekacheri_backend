@@ -28,13 +28,14 @@ return [
         'latest_kacheries',
         'kachehries*',
         'complaints*',
-        '/dashboard/kachehri-stats',
-        '/dashboard/kachehri-monthly',
-        '/dashboard/complaint-monthly'
+        '/dashboard*',
+        'all_complaints*',
+        'announcements*',
+        'get-user'
     ],
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173'],
+    'allowed_origins' => ['http://kachehri.suigas.pk'],
 
     'allowed_origins_patterns' => [],
 

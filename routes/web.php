@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
-Route::middleware('auth')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return response()->json($request->user());
 });
 Route::resource('cities', CityController::class);
@@ -28,17 +28,25 @@ Route::resource('departments', DepartmentController::class);
 Route::get('latest_kacheries', [EkachehriController::class, 'latestId']);
 Route::resource('kachehries', EkachehriController::class);
 Route::resource('complaints', ComplaintController::class);
+Route::get('all_complaints/{id}', [ComplaintController::class, 'allComplaint']);
 Route::get('/generate-kacheri-uuids', function () {
 
     $kacheries = Ekachehri::whereNull('uuid')->get();
-        foreach ($kacheries as $kacheri) {
-            $kacheri->uuid = Str::uuid();
-            $kacheri->save();
-        }
+    foreach ($kacheries as $kacheri) {
+        $kacheri->uuid = Str::uuid();
+        $kacheri->save();
+    }
     return 'UUIDs generated successfully.';
 });
 Route::get('complaints/fetchuuid/{uuid}', [ComplaintController::class, 'finduuid']);
 // routes/api.php
-Route::get('/dashboard/kachehri-stats', [DashboardController::class, 'dashboardStats']);
-Route::get('/dashboard/kachehri-monthly', [DashboardController::class, 'kachehriMonthly']);
-Route::get('/dashboard/complaint-monthly', [DashboardController::class, 'complaintMonthly']);
+Route::prefix('dashboard')->group(function () {
+    Route::get('/kachehri-stats', [DashboardController::class, 'dashboardStats']);
+    Route::get('/kachehri-monthly', [DashboardController::class, 'kachehriMonthly']);
+    Route::get('/complaint-monthly', [DashboardController::class, 'complaintMonthly']);
+    Route::get('/complaint-status', [DashboardController::class, 'complaintStatus']);
+    Route::get('/total-city', [DashboardController::class, 'totalCity']);
+    Route::get('/total-dfp', [DashboardController::class, 'totalDfp']);
+});
+    Route::get('/announcements/active', [DashboardController::class, 'activeAnnouncement']);
+    Route::get('/get-user', [DashboardController::class, 'getUser']);

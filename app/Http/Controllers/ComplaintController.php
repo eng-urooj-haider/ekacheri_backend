@@ -20,7 +20,7 @@ class ComplaintController extends Controller
     ) {}
     public function index()
     {
-         $complaints = $this->service->getAll();
+        $complaints = $this->service->getAll();
 
         return response()->json([
             'message' => 'Cities fetched successfully.',
@@ -76,7 +76,7 @@ class ComplaintController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   public function update(StoreComplaintRequest $request, int $id): JsonResponse
+    public function update(StoreComplaintRequest $request, int $id): JsonResponse
     {
         $dto = ComplaintDTO::fromArray($request->validated());
 
@@ -99,7 +99,7 @@ class ComplaintController extends Controller
 
     public function findUuid(string $uuid): JsonResponse
     {
-        $complaint = Ekachehri::where('uuid',$uuid)->first();
+        $complaint = Ekachehri::where('uuid', $uuid)->first();
 
         if (!$complaint) {
             return response()->json([
@@ -112,6 +112,15 @@ class ComplaintController extends Controller
             'success' => true,
             'message' => 'Ekacheri retrieved successfully.',
             'data'    => $complaint,
+        ]);
+    }
+    public function allComplaint($id)
+    {
+        $complaints =  $this->service->all_complaint($id);
+       return response()->json([
+            'success' => true,
+            'message' => 'Ekacheri retrieved successfully.',
+            'data'    => $complaints,
         ]);
     }
 }

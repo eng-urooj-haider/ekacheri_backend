@@ -12,7 +12,7 @@ class EkachehriService
 {
     public function getAll(): Collection
     {
-        return Ekachehri::all();
+        return Ekachehri::orderBy('created_at','desc')->get();
     }
 
     public function getById(int $id): Ekachehri

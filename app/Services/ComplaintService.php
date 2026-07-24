@@ -4,13 +4,14 @@ namespace App\Services;
 
 use App\DTOs\ComplaintDTO;
 use App\Models\Complaint;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ComplaintService
 {
     public function getAll()
     {
-        return Complaint::with('user')->get();
+        return Complaint::with('user')->orderBy('created_at','desc')->get();
     }
 
     public function create(ComplaintDTO $dto): Complaint
@@ -35,5 +36,9 @@ class ComplaintService
 
             return $complaint;
         });
+    }
+    public function all_complaint(int $id): Collection
+    {
+        return Complaint::where('ekachehri_id', $id)->get();
     }
 }

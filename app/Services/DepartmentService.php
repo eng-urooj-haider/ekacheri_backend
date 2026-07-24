@@ -9,7 +9,7 @@ class DepartmentService
 {
     public function getAll()
     {
-        return Department::all();
+        return Department::orderBy('created_at','desc')->get();;
     }
 
     public function saveDepartment(DepartmentDTO $dto): Department
