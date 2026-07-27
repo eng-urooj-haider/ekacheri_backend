@@ -13,13 +13,16 @@ class UserController extends Controller
         private readonly UserService $userService
     ) {
     }
-    public function index()
+   public function index(Request $request)
     {
-        $dfps =  $this->userService->getAll();
+        $perPage = $request->input('per_page', 10);
+        $page    = $request->input('page', 1);
+        $search  = $request->input('search'); // NEW
+        $users = $this->userService->getAll($perPage, $page, $search); // NEW: pass search
         return response()->json([
-            'message' => 'Location fetch successfully.',
-            'data'    => $dfps,
-        ], 201);
+            'message' => 'Locations fetched successfully.',
+            'data'    => $users,
+        ]);
     }
 
     /**

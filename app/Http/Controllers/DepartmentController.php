@@ -13,13 +13,18 @@ class DepartmentController extends Controller
     public function __construct(
         private readonly DepartmentService $service
     ) {}
-    public function index()
-    {
-        $departments =  $this->service->getAll();
+    public function index(Request $request)
+     {
+        $perPage = $request->input('per_page', 10);
+        $page    = $request->input('page', 1);
+        $search  = $request->input('search'); // NEW
+
+        $locations = $this->service->getAll($perPage, $page, $search); // NEW: pass search
+
         return response()->json([
-            'message' => 'Department fetch successfully.',
-            'data'    => $departments,
-        ], 201);
+            'message' => 'Locations fetched successfully.',
+            'data'    => $locations,
+        ]);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DTOs\LocationDTO;
 use App\Http\Requests\LocationRequest;
 use App\Services\LocationService;
+use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
@@ -15,13 +16,16 @@ class LocationController extends Controller
     /**
      * Store a newly created location.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $location =  $this->locationService->getAll();
+        $perPage = $request->input('per_page', 10);
+        $page    = $request->input('page', 1);
+        $search  = $request->input('search'); // NEW
+        $locations = $this->locationService->getAll($perPage, $page, $search); // NEW: pass search
         return response()->json([
-            'message' => 'Location fetch successfully.',
-            'data'    => $location,
-        ], 201);
+            'message' => 'Locations fetched successfully.',
+            'data'    => $locations,
+        ]);
     }
     public function store(LocationRequest $request)
     {

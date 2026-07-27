@@ -6,6 +6,7 @@ use App\DTOs\CityDTO;
 use App\Http\Requests\CityRequest;
 use App\Models\City;
 use App\Services\CityService;
+use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
@@ -16,13 +17,17 @@ class CityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cities = $this->cityService->getAll();
+        $perPage = $request->input('per_page', 10);
+        $page    = $request->input('page', 1);
+        $search  = $request->input('search'); // NEW
+
+        $Cities = $this->cityService->getAll($perPage, $page, $search); // NEW: pass search
 
         return response()->json([
             'message' => 'Cities fetched successfully.',
-            'data'    => $cities,
+            'data'    => $Cities,
         ]);
     }
 

@@ -5,14 +5,30 @@ namespace App\Services;
 use App\DTOs\EkachehriDTO;
 use App\Models\Ekachehri;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class EkachehriService
 {
-    public function getAll(): Collection
+    public function getAll($perPage = 10, $page = 1, $search = null)
     {
-        return Ekachehri::orderBy('created_at','desc')->get();
+        if ($user && $user->role_id == 2) {
+            $query = Ekachehri::whereRaw("FIND_IN_SET(?, dfp_ids)", [$user->id])
+                ->orderBy('created_at', 'desc');
+        } else {
+            $query = Ekachehri::orderBy('created_at', 'desc');
+        }
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('kachehri_number', 'like', "%{$search}%")
+                    ->orWhere('venue', 'like', "%{$search}%")
+                    ->orWhere('location', 'like', "%{$search}%");
+            });
+        }
+
+        return $query->paginate($perPage, ['*'], 'page', $page);
     }
 
     public function getById(int $id): Ekachehri

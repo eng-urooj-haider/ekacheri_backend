@@ -7,11 +7,17 @@ use App\Models\Department;
 
 class DepartmentService
 {
-    public function getAll()
+    public function getAll($perPage = 10, $page = 1, $search = null)
     {
-        return Department::orderBy('created_at','desc')->get();;
-    }
+        $query =  Department::orderBy('created_at', 'desc');
 
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")->orWhere('email_addresses', 'like', "%{$search}%");
+            });
+        }
+        return $query->paginate($perPage, ['*'], 'page', $page);
+    }
     public function saveDepartment(DepartmentDTO $dto): Department
     {
         $data = $dto->toArray();

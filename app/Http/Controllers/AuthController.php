@@ -22,7 +22,6 @@ class AuthController extends Controller
 
         // Prevent session fixation
         $request->session()->regenerate();
-
         return response()->json([
             'message' => 'Login successful.',
             'user' => Auth::user(),

@@ -35,7 +35,7 @@ return [
     ],
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://kachehri.suigas.pk'],
+    'allowed_origins' => [env('FRONTEND_URL')],
 
     'allowed_origins_patterns' => [],
 

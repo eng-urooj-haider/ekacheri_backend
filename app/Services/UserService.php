@@ -10,11 +10,18 @@ use Illuminate\Support\Facades\DB;
 
 class UserService
 {
-    public function getAll(): Collection
+      public function getAll($perPage = 10, $page = 1, $search = null)
     {
-        return User::orderBy('created_at','desc')->get();
-    }
+        $query =  User::orderBy('created_at','desc');
 
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->orWhere('executive_number', 'like', "%{$search}%")->orWhere('mobile', 'like', "%{$search}%");
+            });
+        }
+        return $query->paginate($perPage, ['*'], 'page', $page);
+
+    }
     public function getById(int $id): User
     {
         return User::with('dept')->where('id',$id)->first();

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreEkachehriRequest;
 use App\Http\Requests\UpdateEkachehriRequest;
 use App\Services\EkachehriService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class EkachehriController extends Controller
 {
@@ -15,14 +16,17 @@ class EkachehriController extends Controller
     ) {}
 
     // GET /ekachehris  → used by the list page
-    public function index(): JsonResponse
+     public function index(Request $request)
     {
-        $ekachehris = $this->ekachehriService->getAll();
+        $perPage = $request->input('per_page', 10);
+        $page    = $request->input('page', 1);
+        $search  = $request->input('search'); // NEW
+
+        $kachehries = $this->ekachehriService->getAll($perPage, $page, $search); // NEW: pass search
 
         return response()->json([
-            'success' => true,
-            'message' => 'E-Kachehris fetched successfully.',
-            'data' => $ekachehris,
+            'message' => 'E-Kachehri fetched successfully.',
+            'data'    => $kachehries,
         ]);
     }
 

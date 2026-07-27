@@ -7,9 +7,17 @@ use App\Models\City;
 
 class CityService
 {
-    public function getAll()
+    public function getAll($perPage = 10, $page = 1, $search = null)
     {
-        return City::orderBy('created_at','desc')->get();
+        $query =  City::orderBy('created_at','desc');
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%");
+            });
+        }
+        return $query->paginate($perPage, ['*'], 'page', $page);
+
     }
 
     public function saveCity(CityDTO $dto): City

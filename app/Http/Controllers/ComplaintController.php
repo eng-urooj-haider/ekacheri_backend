@@ -18,15 +18,19 @@ class ComplaintController extends Controller
     public function __construct(
         private readonly ComplaintService $service
     ) {}
-    public function index()
-    {
-        $complaints = $this->service->getAll();
+   public function index(Request $request)
+{
+    $perPage = $request->input('per_page', 10);
+    $page    = $request->input('page', 1);
+    $search  = $request->input('search'); // NEW
 
-        return response()->json([
-            'message' => 'Cities fetched successfully.',
-            'data'    => $complaints,
-        ]);
-    }
+    $complaints = $this->service->getAll($perPage, $page, $search); // NEW: pass search
+
+    return response()->json([
+        'message' => 'Complaints fetched successfully.',
+        'data'    => $complaints,
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.
@@ -117,7 +121,7 @@ class ComplaintController extends Controller
     public function allComplaint($id)
     {
         $complaints =  $this->service->all_complaint($id);
-       return response()->json([
+        return response()->json([
             'success' => true,
             'message' => 'Ekacheri retrieved successfully.',
             'data'    => $complaints,
