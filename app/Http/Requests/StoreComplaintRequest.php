@@ -14,7 +14,7 @@ class StoreComplaintRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_number' => ['required', 'string', 'max:255'],
+            'customer_number' => ['nullable', 'string', 'max:255'],
             'contact_number' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
             'telco' => ['required', 'in:Mobilink,Telenor,Ufone,Warid,Zong'],
@@ -28,13 +28,13 @@ class StoreComplaintRequest extends FormRequest
             'closure_time'=>['nullable' , 'string'],
             'department_status'=>['nullable' , 'string'],
             'customer_feedback'=>['nullable' , 'string'],
-            'departmentIds'=>["nullable",'array']
+            'departmentIds'=>["nullable",'array'],
+            'EkacheriId' => ['required']
         ];
     }
     public function messages(): array
     {
         return [
-            'customer_number.required' => 'Customer number is required.',
             'contact_number.required' => 'Contact number is required.',
             'name.required' => 'Name is required.',
             'telco.required' => 'Please select a network.',

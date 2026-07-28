@@ -19,12 +19,15 @@ class LocationController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $page    = $request->input('page', 1);
-        $search  = $request->input('search'); // NEW
-        $locations = $this->locationService->getAll($perPage, $page, $search); // NEW: pass search
+        $page = $request->input('page', 1);
+        $search = $request->input('search');
+        $notPaginate = $request->boolean('not_paginate'); // reads "true"/"1" string as real boolean
+
+        $locations = $this->locationService->getAll($perPage, $page, $search, $notPaginate);
+
         return response()->json([
             'message' => 'Locations fetched successfully.',
-            'data'    => $locations,
+            'data' => $locations,
         ]);
     }
     public function store(LocationRequest $request)

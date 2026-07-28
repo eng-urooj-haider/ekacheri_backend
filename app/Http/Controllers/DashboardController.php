@@ -7,6 +7,7 @@ use App\Models\Complaint;
 use App\Models\Ekachehri;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
@@ -104,7 +105,7 @@ class DashboardController extends Controller
     }
     public function getUser(): JsonResponse
     {
-        $user = auth()->user()->name;
+        $user = auth()->user();
 
         return response()->json([
             'user' => $user
@@ -137,5 +138,16 @@ class DashboardController extends Controller
                 'value' => $counts->get($monthNumber, 0),
             ];
         })->values();
+    }
+    public function verifyCustomer(Request $request)
+    {
+        $customerNumber = $request->input('customer_number');
+
+        $response = \Illuminate\Support\Facades\Http::get(
+            "https://viewbill.ssgc.com.pk/web/check_cust_number.php",
+            ['q' => $customerNumber]
+        );
+
+        return response()->json($response->json());
     }
 }

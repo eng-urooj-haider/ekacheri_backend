@@ -13,7 +13,9 @@ class EkachehriService
 {
     public function getAll($perPage = 10, $page = 1, $search = null)
     {
-        if ($user && $user->role_id == 2) {
+        $user = auth()->user(); // FIX: was missing entirely
+
+        if ($user && $user->roleId == 2) {
             $query = Ekachehri::whereRaw("FIND_IN_SET(?, dfp_ids)", [$user->id])
                 ->orderBy('created_at', 'desc');
         } else {
@@ -30,7 +32,6 @@ class EkachehriService
 
         return $query->paginate($perPage, ['*'], 'page', $page);
     }
-
     public function getById(int $id): Ekachehri
     {
         return Ekachehri::with('attendees')->findOrFail($id);

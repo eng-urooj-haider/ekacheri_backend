@@ -18,19 +18,18 @@ class ComplaintController extends Controller
     public function __construct(
         private readonly ComplaintService $service
     ) {}
-   public function index(Request $request)
-{
-    $perPage = $request->input('per_page', 10);
-    $page    = $request->input('page', 1);
-    $search  = $request->input('search'); // NEW
+    public function index(Request $request)
+    {
+        $perPage = $request->input('per_page', 10);
+        $page    = $request->input('page', 1);
+        $search  = $request->input('search'); // NEW
+        $complaints = $this->service->getAll($perPage, $page, $search); // NEW: pass search
 
-    $complaints = $this->service->getAll($perPage, $page, $search); // NEW: pass search
-
-    return response()->json([
-        'message' => 'Complaints fetched successfully.',
-        'data'    => $complaints,
-    ]);
-}
+        return response()->json([
+            'message' => 'Complaints fetched successfully.',
+            'data'    => $complaints,
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -118,12 +117,16 @@ class ComplaintController extends Controller
             'data'    => $complaint,
         ]);
     }
-    public function allComplaint($id)
+    public function allComplaint(Request $request , $id)
     {
-        $complaints =  $this->service->all_complaint($id);
+
+        $perPage = $request->input('per_page', 10);
+        $page    = $request->input('page', 1);
+        $search  = $request->input('search'); // NEW
+        $complaints = $this->service->all_complaint($perPage, $page, $search, $id); // NEW: pass search
+
         return response()->json([
-            'success' => true,
-            'message' => 'Ekacheri retrieved successfully.',
+            'message' => 'Complaints fetched successfully.',
             'data'    => $complaints,
         ]);
     }

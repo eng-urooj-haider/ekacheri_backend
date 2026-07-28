@@ -26,7 +26,9 @@ class Complaint extends Model
         'closure_time',
         'department_status',
         'customer_feedback',
-        'department'
+        'department',
+        'createdby',
+        'ekachehri_id'
     ];
       protected $casts = [
     'closure_date' => 'date:Y-m-d',

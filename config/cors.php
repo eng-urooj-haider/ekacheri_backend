@@ -31,7 +31,8 @@ return [
         '/dashboard*',
         'all_complaints*',
         'announcements*',
-        'get-user'
+        'get-user',
+        'verify-customer'
     ],
     'allowed_methods' => ['*'],
 

@@ -11,7 +11,12 @@ class ComplaintService
 {
     public function getAll($perPage = 10, $page = 1, $search = null)
     {
-        $query = Complaint::with('user')->orderBy('created_at', 'desc');
+        $user = auth()->user();
+        if ($user->roleId == 2) {
+            $query = Complaint::with('user')->where('createdby', $user->id)->orderBy('created_at', 'desc');
+        } else {
+            $query = Complaint::with('user')->orderBy('created_at', 'desc');
+        }
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
@@ -51,8 +56,22 @@ class ComplaintService
             return $complaint;
         });
     }
-    public function all_complaint(int $id): Collection
+    public function all_complaint($perPage = 10, $page = 1, $search = null, int $id)
     {
-        return Complaint::where('ekachehri_id', $id)->get();
+        $query = Complaint::where('ekachehri_id', $id)->orderBy('created_at', 'desc');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('ekachehri_id', 'like', "%{$search}%")
+                    ->orWhere('complaint_category', 'like', "%{$search}%")
+                    ->orWhere('complaint_type', 'like', "%{$search}%")
+                    ->orWhere('status', 'like', "%{$search}%")
+                    ->orWhere('complaint_details', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhere('priority', 'like', "%{$search}%");
+            });
+        }
+
+        return $query->paginate($perPage, ['*'], 'page', $page);
     }
 }

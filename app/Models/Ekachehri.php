@@ -31,7 +31,6 @@ class Ekachehri extends Model
     'kachehri_date' => 'date:Y-m-d',
     'kachehri_time' => 'datetime:H:i:s',
     'kachehri_number' => 'integer',
-    'dfp_ids' => 'array',
 ];
 
 

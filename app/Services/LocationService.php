@@ -11,17 +11,16 @@ class LocationService
     /**
      * Get all locations.
      */
-    public function getAll($perPage = 10, $page = 1, $search = null)
+    public function getAll($perPage = 10, $page = 1, $search = null, $notPaginate = false)
     {
         $query = Location::with('city')->orderBy('created_at', 'desc');
 
         if (!empty($search)) {
-            $query->where(function ($q) use ($search) {
-                $q->where('location', 'like', "%{$search}%")
-                    ->orWhereHas('city', function ($cityQuery) use ($search) {
-                        $cityQuery->where('title', 'like', "%{$search}%");
-                    });
-            });
+            $query->where('location', 'like', "%{$search}%");
+        }
+
+        if ($notPaginate) {
+            return $query->get();
         }
 
         return $query->paginate($perPage, ['*'], 'page', $page);

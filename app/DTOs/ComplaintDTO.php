@@ -5,7 +5,7 @@ namespace App\DTOs;
 class ComplaintDTO
 {
     public function __construct(
-        public readonly string $customer_number,
+        public readonly ?string $customer_number,
         public readonly string $contact_number,
         public readonly string $name,
         public readonly string $telco,
@@ -20,8 +20,8 @@ class ComplaintDTO
         public readonly ?string $closure_time = null,
         public readonly ?string $department_status = null,
         public readonly ?string $customer_feedback = null,
-    ) {
-    }
+        public readonly ?string $EkacheriId = null,
+    ) {}
 
     public static function fromArray(array $data): self
     {
@@ -41,6 +41,7 @@ class ComplaintDTO
             closure_time: $data['closure_time'] ?? null,
             department_status: $data['department_status'] ?? null,
             customer_feedback: $data['customer_feedback'] ?? null,
+            EkacheriId: $data['EkacheriId'] ?? null,
         );
     }
 
@@ -66,7 +67,7 @@ class ComplaintDTO
             'department_status' => $this->department_status,
             'customer_feedback' => $this->customer_feedback,
             'department' => implode(',', $this->department),
-
+            'ekachehri_id' => $this->EkacheriId
         ];
     }
 }
