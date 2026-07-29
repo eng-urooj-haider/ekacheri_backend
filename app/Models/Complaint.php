@@ -28,11 +28,11 @@ class Complaint extends Model
         'customer_feedback',
         'department',
         'createdby',
-        'ekachehri_id'
+        'ekachehri_id',
     ];
-      protected $casts = [
-    'closure_date' => 'date:Y-m-d',
-];
+    protected $casts = [
+        'closure_date' => 'date:Y-m-d',
+    ];
     public function departments(): BelongsToMany
     {
         return $this->belongsToMany(Department::class, 'complaint_department', 'complaint_id', 'department_id');
@@ -46,4 +46,5 @@ class Complaint extends Model
     {
         return $this->closure_date?->format('m/y/d');
     }
+   
 }

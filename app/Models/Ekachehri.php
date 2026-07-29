@@ -24,17 +24,18 @@ class Ekachehri extends Model
         'session_convened',
         'session_not_conv_reason',
         'createdby',
-        'uuid'
+        'uuid',
+        'complaint_window_reset_at'
     ];
 
-   protected $casts = [
-    'kachehri_date' => 'date:Y-m-d',
-    'kachehri_time' => 'datetime:H:i:s',
-    'kachehri_number' => 'integer',
-];
+    protected $casts = [
+        'kachehri_date' => 'date:Y-m-d',
+        'kachehri_time' => 'datetime:H:i:s',
+        'kachehri_number' => 'integer',
+    ];
 
 
-    protected $appends = ['kachehri_date_formatted','kachehri_time_formatted'];
+    protected $appends = ['kachehri_date_formatted', 'kachehri_time_formatted', 'dfps'];
     public function attendees(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -50,12 +51,22 @@ class Ekachehri extends Model
         return $this->kachehri_date?->format('d/m/Y');
     }
 
-   public function getKachehriTimeFormattedAttribute()
-{
-    return $this->kachehri_time
-        ? Carbon::parse($this->kachehri_time)->format('h:i A')
-        : null;
-}
+    public function getKachehriTimeFormattedAttribute()
+    {
+        return $this->kachehri_time
+            ? Carbon::parse($this->kachehri_time)->format('h:i A')
+            : null;
+    }
+    public function getDfpsAttribute()
+    {
+        if (empty($this->dfp_ids)) {
+            return [];
+        }
 
-}
+        $ids = array_filter(array_map('trim', explode(',', $this->dfp_ids)));
 
+        return User::whereIn('id', $ids)
+            ->select('id', 'name', 'designation')
+            ->get();
+    }
+}

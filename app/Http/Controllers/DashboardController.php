@@ -150,4 +150,31 @@ class DashboardController extends Controller
 
         return response()->json($response->json());
     }
+    use Carbon\Carbon; // make sure this is at the top of the file
+
+    public function complaintReopen($id) // also fixed typo: "Reopne" → "Reopen"
+    {
+        if (auth()->user()->role_id != 1) { // restrict to admin only — confirm your real admin role_id
+            return response()->json([
+                'message' => 'Unauthorized.',
+            ], 403);
+        }
+
+        $kachehri = Ekachehri::find($id); // find() returns null instead of throwing if not found
+
+        if (!$kachehri) {
+            return response()->json([
+                'message' => 'E-Kachehri not found.',
+            ], 404);
+        }
+
+        $kachehri->update([
+            'complaint_window_reset_at' => Carbon::now(),
+        ]);
+
+        return response()->json([
+            'message' => 'Complaint window reopened for 48 hours.',
+            'data' => $kachehri,
+        ]);
+    }
 }

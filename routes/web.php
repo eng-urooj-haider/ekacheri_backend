@@ -51,4 +51,6 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/announcements/active', [DashboardController::class, 'activeAnnouncement']);
     Route::get('/get-user', [DashboardController::class, 'getUser']);
     Route::post('/verify-customer', [DashboardController::class, 'verifyCustomer']);
+    Route::get('/complaints/reopen/{id}', [DashboardController::class, 'complaintReopne']);
+
 
