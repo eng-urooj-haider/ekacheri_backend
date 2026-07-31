@@ -39,8 +39,10 @@ Route::get('/generate-kacheri-uuids', function () {
     return 'UUIDs generated successfully.';
 });
 Route::get('complaints/fetchuuid/{uuid}', [ComplaintController::class, 'finduuid']);
+
 // routes/api.php
 Route::prefix('dashboard')->group(function () {
+    Route::get('/overview', [DashboardController::class, 'overview']); // <-- new combined endpoint
     Route::get('/kachehri-stats', [DashboardController::class, 'dashboardStats']);
     Route::get('/kachehri-monthly', [DashboardController::class, 'kachehriMonthly']);
     Route::get('/complaint-monthly', [DashboardController::class, 'complaintMonthly']);
@@ -48,9 +50,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/total-city', [DashboardController::class, 'totalCity']);
     Route::get('/total-dfp', [DashboardController::class, 'totalDfp']);
 });
-    Route::get('/announcements/active', [DashboardController::class, 'activeAnnouncement']);
-    Route::get('/get-user', [DashboardController::class, 'getUser']);
-    Route::post('/verify-customer', [DashboardController::class, 'verifyCustomer']);
-    Route::get('/complaints/reopen/{id}', [DashboardController::class, 'complaintReopen']);
-
-
+Route::get('/announcements/active', [DashboardController::class, 'activeAnnouncement']);
+Route::get('/get-user', [DashboardController::class, 'getUser']);
+Route::post('/verify-customer', [DashboardController::class, 'verifyCustomer']);
+Route::get('/complaints/reopen/{id}', [DashboardController::class, 'complaintReopen']);
